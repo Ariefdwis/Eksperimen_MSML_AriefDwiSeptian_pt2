@@ -1,0 +1,37 @@
+name: Automasi Preprocessing Data
+
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+
+    - name: Set up Python 3.12.7
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.12.7"
+
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas numpy scikit-learn
+
+
+    - name: Run automation script
+      run: python automate_AriefDwiSeptian.py
+
+
+    - name: Upload clean data artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: clean-dataset-result
+        path: dataset_preprocessing/water_potability_clean.csv 
